@@ -1,9 +1,0 @@
-----------------------------368957922247346153898421
-Content-Disposition: form-data; name="file"; filename="file.csv"
-Content-Type: text/csv
-
-Id, Name, Slack
-1000, test, @test
-1002, Vasya, @Vasya
-
-----------------------------368957922247346153898421--
