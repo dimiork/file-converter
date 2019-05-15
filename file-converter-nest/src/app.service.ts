@@ -32,6 +32,5 @@ export class AppService {
     } catch (error) {
       throw new BadRequestException(error);
     }
-
   }
 }
