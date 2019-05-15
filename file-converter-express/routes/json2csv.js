@@ -24,14 +24,19 @@ router.post('/', upload.single('file'), (req, res, next) => {
 });
 
 function json2csv (json = '{}', delimeter = ',') {
-  const data = JSON.parse(json);
-  const header = Object.keys(data[0]);
-
-  let csv = data.map((line) => header.map((fieldName) =>
-    line[fieldName]).join(delimeter)
-  );
-
-  return [ header.join(delimeter), ...csv ].join('\r\n');
+  try {
+    const data = JSON.parse(json);
+    const header = Object.keys(data[0]);
+  
+    let csv = data.map((line) => header.map((fieldName) =>
+      line[fieldName]).join(delimeter)
+    );
+  
+    return [ header.join(delimeter), ...csv ].join('\r\n');
+  } catch (error) {
+    return error;
+  }
+  
 }
 
 module.exports = router;
