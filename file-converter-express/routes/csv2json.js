@@ -2,7 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const multer  = require('multer')
-const upload = multer({ storage: multer.memoryStorage() })
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, callback) => {
+    const ext = path.extname(file.originalname);
+    if(ext !== '.csv') {
+        return callback(new Error('Only .csv files allowed'))
+    }
+    callback(null, true)
+  },
+  limits: {
+    fileSize: 1024 * 1024,
+    parts: 1,
+  },
+});
 
 router.post('/', upload.single('file'), (req, res, next) => {
   console.log(req.file, req.file.buffer.toString('utf8'));

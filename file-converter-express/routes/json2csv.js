@@ -2,8 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const multer  = require('multer')
-var storage = multer.memoryStorage()
-var upload = multer({ storage: storage })
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, callback) => {
+    const ext = path.extname(file.originalname);
+    if(ext !== '.json') {
+        return callback(new Error('Only .json files allowed'))
+    }
+    callback(null, true)
+  },
+  limits: {
+    fileSize: 1024 * 1024,
+    parts: 1,
+  },
+});
 
 
 router.post('/', upload.single('file'), (req, res, next) => {
